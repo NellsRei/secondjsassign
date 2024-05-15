@@ -23,3 +23,60 @@
 // Design a "cheat mode" feature that alters the computer's choice in some way (optional).
 // Come up with one specific implementation of cheat mode (e.g., computer always chooses scissors).
 
+let humanScore = 0
+let computerScore = 0
+
+
+//asks for the human input
+const { timeEnd } = require('console');
+
+const readline = require('readline');
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+})
+
+//generates the computers move
+function comps(){
+    let choice = Math.random
+
+    if(choice < 0.34){
+        return "rock"
+    }else if(choice < 0.67){
+        return "paper"
+    }else {
+        return "scissors"
+    }
+}
+
+//choosing the winner
+function choseWinner(userinput,comps){
+    if(userinput == comps){
+        return "tie"
+    }else if(userinput == "rock" && comps == "scissors" || userinput == "scissors" && comps == "paper" || userinput == "paper" && comps == "rock"){
+        humanScore++
+        console.log("You win")
+    }else if(userinput == "paper" && comps == "scissors"){
+        computerScore++
+        console.log("The computer wins")
+    } 
+}
+
+
+
+const roundOne= (userinput) =>{
+    let compsMove = comps()
+    let resultFinal = choseWinner(userinput,comps)
+    console.log(`You chose: ${userinput}`)
+    console.log(`Computer chose: ${compsMove}`)
+
+    //display results
+console.log(`Your score is: ${humanScore} and the computer's score is: ${computerScore}`)
+
+}
+
+
+rl.question("Choose rock, paper, or scissors: ", (userinput) => {
+    roundOne(userinput.toLowerCase());
+    rl.close();
+});
