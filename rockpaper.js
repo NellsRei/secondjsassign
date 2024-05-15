@@ -23,22 +23,21 @@
 // Design a "cheat mode" feature that alters the computer's choice in some way (optional).
 // Come up with one specific implementation of cheat mode (e.g., computer always chooses scissors).
 
-let humanScore = 0
-let computerScore = 0
 
 
 //asks for the human input
-const { timeEnd } = require('console');
-
 const readline = require('readline');
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
+const user = readline.createInterface({
+    input: process.stdin,   //for reading input from the user
+    output: process.stdout, //outputting text
 })
+
+let humanScore = 0
+let computerScore = 0
 
 //generates the computers move
 function comps(){
-    let choice = Math.random
+    let choice = Math.random()
 
     if(choice < 0.34){
         return "rock"
@@ -51,32 +50,48 @@ function comps(){
 
 //choosing the winner
 function choseWinner(userinput,comps){
+    //for the scores
+    // console.log(userinput)
+    // console.log(comps)
     if(userinput == comps){
-        return "tie"
-    }else if(userinput == "rock" && comps == "scissors" || userinput == "scissors" && comps == "paper" || userinput == "paper" && comps == "rock"){
-        humanScore++
+        console.log( "Both tied")
+    }else if((userinput == "rock" && comps == "scissors") || (userinput == "scissors" && comps == "paper") || (userinput == "paper" && comps == "rock")){
+        
         console.log("You win")
-    }else if(userinput == "paper" && comps == "scissors"){
-        computerScore++
+        console.log("The computer lost")
+        return humanScore=humanScore+1
+
+    }else{
         console.log("The computer wins")
-    } 
+        return computerScore=computerScore+1
+    }
+    
 }
-
-
-
+//playing round 1
 const roundOne= (userinput) =>{
     let compsMove = comps()
-    let resultFinal = choseWinner(userinput,comps)
     console.log(`You chose: ${userinput}`)
     console.log(`Computer chose: ${compsMove}`)
 
     //display results
-console.log(`Your score is: ${humanScore} and the computer's score is: ${computerScore}`)
-
+    // let scores = choseWinner(userinput, compsMove)
+    // humanScore = scores.humanScore
+    // computerScore = scores.computerScore
+    console.log(humanScore)
+    console.log(computerScore)
+   
+    console.log(`Your score is: ${humanScore} and the computer's score is: ${computerScore}`)
 }
 
 
-rl.question("Choose rock, paper, or scissors: ", (userinput) => {
-    roundOne(userinput.toLowerCase());
-    rl.close();
-});
+user.question("Choose rock, paper, or scissors: ", (userinput) => {
+       userinput = userinput.toLowerCase()
+    if (userinput !== "rock" && userinput !== "paper" && userinput !== "scissors") {
+        console.log("Enter a valid choice (rock, paper, or scissors).")
+    } else {
+        roundOne(userinput)
+    }
+    user.close()
+    }    
+    )
+
